@@ -2,7 +2,6 @@ const User = require("../models/UserModel");
 const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncError = require("../middlewares/catchAsyncError");
 const sendToken = require("../utils/jwt");
-const { firebaseApp } = require("../library/firebase");
 
 //Register user
 exports.registerUser = catchAsyncError(async (req, res, next) => {
@@ -47,27 +46,6 @@ exports.getUserProfile = catchAsyncError(async (req, res, next) => {
   })
 })
 
-//signin with google
-exports.signInWithFirebase = async (req, res) => {
-  try {
-    const { token } = req.body;
-    const decodedToken = await firebaseApp.auth().verifyIdToken(token);
-    if (decodedToken.email) {
-      res.json({
-        status: "ok", 
-        message: "sign in success",
-      });
-    } else {
-      res.status(404).json({
-        status: "error",
-        message: "sign in failed",
-      });
-    }
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ status: "error", message: "somthing went wrong" });
-  }
-};
 
 exports.logoutUser = (req, res, next) => {
   req
