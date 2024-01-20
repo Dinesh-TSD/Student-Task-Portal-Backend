@@ -38,6 +38,15 @@ exports.loginUser = catchAsyncError(async (req, res, next) => {
   sendToken(user, 201, res);
 });
 
+//Get User Profile - /api/v1/myprofile
+exports.getUserProfile = catchAsyncError(async (req, res, next) => {
+  const user = await User.findById(req.user.id)
+  res.status(200).json({
+       success:true,
+       user
+  })
+})
+
 //signin with google
 exports.signInWithFirebase = async (req, res) => {
   try {

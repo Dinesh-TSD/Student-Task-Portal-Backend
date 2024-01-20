@@ -17,7 +17,12 @@ const sendToken = (user, statusCode, res) => {
         success: true,
         message:"Login success",
         token, 
-        user
+        user:{
+            name:user.name,
+            email:user.email,
+            role:user.role,
+            id:user._id
+        }
     })
 
 
